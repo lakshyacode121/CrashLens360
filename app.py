@@ -14,7 +14,11 @@ st.set_page_config(
 
 
 #  Dataset
+
 df = pd.read_csv("cleaned_accident_dataset.csv")
+
+# Keep original data for dashboard
+df_original = df.copy()
 
 encoders = {}
 
@@ -31,9 +35,12 @@ categorical_columns = [
     "festival"
 ]
 
+# Create encoded copy only for prediction
+df_model = df.copy()
+
 for col in categorical_columns:
     le = LabelEncoder()
-    df[col] = le.fit_transform(df[col].astype(str))
+    df_model[col] = le.fit_transform(df_model[col].astype(str))
     encoders[col] = le
 
 model = joblib.load("risk_model")
@@ -160,24 +167,24 @@ elif menu == "Data Analysis":
     with col1:
      selected_city = st.selectbox(
         "Select City",
-        ["All"] + sorted(df["city"].unique().tolist())
+        ["All"] + sorted(df_original["city"].unique().tolist())
     )
 
     with col2:
      selected_weather = st.selectbox(
         "Select Weather",
-        ["All"] + sorted(df["weather"].unique().tolist())
+        ["All"] + sorted(df_original["weather"].unique().tolist())
     )
 
     with col3:
      selected_severity = st.selectbox(
         "Select Severity",
-        ["All"] + sorted(df["accident_severity"].unique().tolist())
+        ["All"] + sorted(df_original["accident_severity"].unique().tolist())
     )
 
  
 
-    filtered_df = df.copy()
+    filtered_df = df_original.copy()
 
     if selected_city != "All":
      filtered_df = filtered_df[filtered_df["city"] == selected_city]
