@@ -433,7 +433,7 @@ elif menu == "Prediction":
     format="%.6f"
      )
 
-if st.button("Predict Risk Score"):
+    if st.button("Predict Risk Score"):
         input_data = pd.DataFrame([{
             "city": encoders["city"].transform([city])[0],
             "state": encoders["state"].transform([state])[0],
