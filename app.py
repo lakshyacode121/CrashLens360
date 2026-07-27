@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import joblib
+import folium
+from streamlit_folium import st_folium
+from folium.plugins import HeatMap
 from sklearn.preprocessing import LabelEncoder
 st.set_page_config(
     page_title="CrashLens360",
@@ -41,7 +44,7 @@ st.sidebar.title("🚗 CrashLens360")
 
 menu = st.sidebar.radio(
     "Navigation",
-    ["Home", "Dataset", "Data Analysis", "Prediction", "About"]
+    ["Home", "Dataset", "Data Analysis","GIS Map","Prediction", "About"]
 )
 
 
@@ -367,7 +370,28 @@ elif menu == "Data Analysis":
 
      > The histogram shows how accident records are distributed across different temperature ranges.
        """)
+elif menu == "GIS Map":
 
+    st.title("🗺️ GIS-Based Accident Visualization")
+
+    st.write("This page displays accident locations on an interactive map.")
+
+    # Create map centered on India
+    # Create India Map
+    m = folium.Map(location=[22.97, 78.65], zoom_start=5)
+
+   # Display first 500 accident locations
+    # Prepare latitude and longitude for HeatMap
+    heat_data = df[["latitude", "longitude"]].dropna().values.tolist()
+
+    # Add HeatMap
+    HeatMap(
+     heat_data,
+     radius=12,
+     blur=18,
+     max_zoom=10
+    ).add_to(m)
+    st_folium(m, width=1000, height=600)
 elif menu == "Prediction":
 
     st.title(" Accident Risk Prediction")
@@ -393,13 +417,24 @@ elif menu == "Prediction":
     casualties = st.number_input("Casualties", 0, 20, 0)
     is_peak_hour = st.selectbox("Peak Hour", [0, 1])
     festival = st.selectbox("Festival", encoders["festival"].classes_)
+    latitude = st.number_input(
+    "Latitude",
+    min_value=-90.0,
+    max_value=90.0,
+    value=28.6139,
+    format="%.6f"
+     )
 
-    latitude = st.number_input("Latitude", value=28.61)
-    longitude = st.number_input("Longitude", value=77.20)
+    longitude = st.number_input(
+    "Longitude",
+    min_value=-180.0,
+    max_value=180.0,
+    value=77.2090,
+    format="%.6f"
+     )
 
     if st.button("Predict Risk Score"):
-
-        input_data = pd.DataFrame([{
+      input_data = pd.DataFrame([{
             "city": encoders["city"].transform([city])[0],
             "state": encoders["state"].transform([state])[0],
             "latitude": latitude,
@@ -421,18 +456,18 @@ elif menu == "Prediction":
             "casualties": casualties,
             "is_peak_hour": is_peak_hour,
             "festival": encoders["festival"].transform([festival])[0]
-        }])
+             }])
 
-        prediction = model.predict(input_data)[0]
+    prediction = model.predict(input_data)[0]
 
-        st.success(f"Predicted Risk Score: {prediction:.2f}")
+    st.success(f"Predicted Risk Score: {prediction:.2f}")
 
-        if prediction < 0.3:
-            st.success(" Low Risk")
-        elif prediction < 0.7:
-            st.warning(" Medium Risk")
-        else:
-            st.error(" High Risk")
+    if prediction < 0.3:
+     st.success(" Low Risk")
+    elif prediction < 0.7:
+         st.warning(" Medium Risk")
+    else:
+         st.error(" High Risk")
 
 
 
