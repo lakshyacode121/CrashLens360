@@ -434,7 +434,7 @@ elif menu == "Prediction":
      )
 
 if st.button("Predict Risk Score"):
-      input_data = pd.DataFrame([{
+        input_data = pd.DataFrame([{
             "city": encoders["city"].transform([city])[0],
             "state": encoders["state"].transform([state])[0],
             "latitude": latitude,
@@ -458,16 +458,16 @@ if st.button("Predict Risk Score"):
             "festival": encoders["festival"].transform([festival])[0]
              }])
 
-    prediction = model.predict(input_data)[0]
+        prediction = model.predict(input_data)[0]
 
-    st.success(f"Predicted Risk Score: {prediction:.2f}")
+        st.success(f"Predicted Risk Score: {prediction:.2f}")
 
-    if prediction < 0.3:
-     st.success(" Low Risk")
-    elif prediction < 0.7:
-         st.warning(" Medium Risk")
-    else:
-         st.error(" High Risk")
+        if prediction < 0.3:
+          st.success(" Low Risk")
+        elif prediction < 0.7:
+          st.warning(" Medium Risk")
+        else:
+          st.error(" High Risk")
 
 
 
