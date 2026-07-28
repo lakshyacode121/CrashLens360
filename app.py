@@ -123,110 +123,6 @@ footer {
     z-index: 1;
 }
 
-/* ================================
-   TRANSPARENT HEADER
-================================ */
-
-[data-testid="stHeader"] {
-    background: transparent;
-}
-
-/* ================================
-   GLASS MAIN CONTENT
-================================ */
-
-.block-container {
-
-    background: rgba(15, 23, 42, 0.62);
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    border-radius: 22px;
-
-    padding: 2rem;
-
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.35);
-
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-/* ================================
-   SIDEBAR
-================================ */
-
-[data-testid="stSidebar"] {
-
-    background: rgba(2, 6, 23, 0.88);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    border-right:
-        1px solid rgba(56, 189, 248, 0.20);
-}
-
-/* Sidebar text */
-[data-testid="stSidebar"] * {
-    color: #f8fafc;
-}
-
-/* ================================
-   HEADINGS AND TEXT
-================================ */
-
-h1, h2, h3 {
-    color: #f8fafc;
-}
-
-p, label {
-    color: #e2e8f0;
-}
-
-/* ================================
-   METRIC CARDS
-================================ */
-
-div[data-testid="metric-container"] {
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(30, 41, 59, 0.82),
-            rgba(15, 23, 42, 0.72)
-        );
-
-    border:
-        1px solid rgba(56, 189, 248, 0.22);
-
-    border-radius: 18px;
-
-    padding: 18px;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.25);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease,
-        border 0.3s ease;
-}
-
-/* Interactive hover effect */
-div[data-testid="metric-container"]:hover {
-
-    transform: translateY(-7px);
-
-    border:
-        1px solid rgba(56, 189, 248, 0.65);
-
-    box-shadow:
-        0 12px 35px rgba(14, 165, 233, 0.25);
-}
 
 /* ================================
    BUTTONS
@@ -292,32 +188,10 @@ div[data-testid="metric-container"]:hover {
         1px solid rgba(56, 189, 248, 0.25);
 }
 
-/* ================================
-   DATAFRAME
-================================ */
 
-[data-testid="stDataFrame"] {
-
-    background: rgba(255, 255, 255, 0.96);
-
-    border-radius: 15px;
-
-    overflow: hidden;
 }
 
-/* ================================
-   PLOTLY CHARTS
-================================ */
 
-.js-plotly-plot {
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.25);
-}
 
 /* ================================
    TABS
@@ -351,17 +225,8 @@ button[data-baseweb="tab"]:hover {
         margin-top: 0.5rem;
     }
 }
-/* DataFrame */
-[data-testid="stDataFrame"] {
 
-    background: #0f172a !important;
 
-    color: white !important;
-
-    border-radius: 15px;
-
-    border: 1px solid #334155;
-}
 
 </style>
 """, unsafe_allow_html=True)
