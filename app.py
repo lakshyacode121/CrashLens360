@@ -351,6 +351,17 @@ button[data-baseweb="tab"]:hover {
         margin-top: 0.5rem;
     }
 }
+/* DataFrame */
+[data-testid="stDataFrame"] {
+
+    background: #0f172a !important;
+
+    color: white !important;
+
+    border-radius: 15px;
+
+    border: 1px solid #334155;
+}
 
 </style>
 """, unsafe_allow_html=True)
