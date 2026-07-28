@@ -1,8 +1,10 @@
 streamlit
 pandas
 numpy
+matplotlib
+plotly
 scikit-learn
 joblib
-matplotlib
+xgboost
 folium
 streamlit-folium
