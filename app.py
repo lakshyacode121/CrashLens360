@@ -220,7 +220,7 @@ elif menu == "📂 Dataset":
     info_df = pd.DataFrame({
     "Column Name": df.columns,
     "Data Type": df.dtypes.astype(str).values,
-    "Missing Values": df.isnull().sum().values
+    "❓ Missing Values": df.isnull().sum().values
      })
 
     st.dataframe(
@@ -229,21 +229,6 @@ elif menu == "📂 Dataset":
     hide_index=True
       )
 
-    st.markdown("---")
-
-    # Missing Values
-    st.subheader("❓ Missing Values")
-
-    missing = pd.DataFrame({
-    "Column": df.columns,
-    "Missing Values": df.isnull().sum().values
-     })
-
-    st.dataframe(
-    missing,
-    use_container_width=True,
-    hide_index=True
-     )
     st.markdown("---")
 
     # Quick Summary
