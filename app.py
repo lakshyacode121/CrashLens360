@@ -13,31 +13,28 @@ st.set_page_config(
     layout="wide"
 )
 st.markdown("""
+
 <style>
-div[data-testid="metric-container"]{
-    background: linear-gradient(135deg,#1e3a8a,#2563eb);
-    padding:20px;
-    border-radius:18px;
-    color:white;
-    border:1px solid #60a5fa;
-    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+
+.stApp{
+    background: linear-gradient(135deg,#020617,#0f172a,#172554);
 }
 
-div[data-testid="metric-container"]:hover{
-    transform:scale(1.03);
-    transition:0.3s;
+.block-container{
+
+    background:rgba(15,23,42,.75);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:20px;
+
+    padding:2rem;
+
 }
 
-h1{
-    color:#38bdf8;
-    text-align:center;
-}
-
-h2,h3{
-    color:white;
-}
 </style>
 """, unsafe_allow_html=True)
+
 
 #  Dataset
 df = pd.read_csv("cleaned_accident_dataset.csv")
