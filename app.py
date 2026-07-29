@@ -192,7 +192,11 @@ elif menu == "📂 Dataset":
 
     # first 10 rows
     st.subheader("👀 Dataset Preview")
-    st.dataframe(df.head(10))
+    st.dataframe(
+    df.head(10),
+    use_container_width=True,
+    hide_index=True
+     )
 
     st.markdown("---")
 
@@ -210,30 +214,36 @@ elif menu == "📂 Dataset":
     st.markdown("---")
 
     # Column Names
-    st.subheader("🧾 Column Names")
-    st.write(list(df.columns))
+    # Dataset Information
+    st.subheader("🧾 Dataset Information")
+
+    info_df = pd.DataFrame({
+    "Column Name": df.columns,
+    "Data Type": df.dtypes.astype(str).values,
+    "Missing Values": df.isnull().sum().values
+     })
+
+    st.dataframe(
+    info_df,
+    use_container_width=True,
+    hide_index=True
+      )
 
     st.markdown("---")
 
     # Missing Values
     st.subheader("❓ Missing Values")
 
-    missing = df.isnull().sum()
+    missing = pd.DataFrame({
+    "Column": df.columns,
+    "Missing Values": df.isnull().sum().values
+     })
 
-    st.dataframe(missing[missing > 0].reset_index().rename(columns={"index":"Column",0:"Missing Values"}))
-
-    st.markdown("---")
-
-    # Data Types
-    st.subheader("🔧 Data Types")
-
-    dtypes = pd.DataFrame({
-        "Column": df.columns,
-        "Data Type": df.dtypes.astype(str)
-    })
-
-    st.dataframe(dtypes)
-
+    st.dataframe(
+    missing,
+    use_container_width=True,
+    hide_index=True
+     )
     st.markdown("---")
 
     # Quick Summary
