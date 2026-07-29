@@ -12,29 +12,49 @@ st.set_page_config(
     page_icon="🚗",
     layout="wide"
 )
-st.markdown("""
 
+st.markdown("""
 <style>
 
+/* Full App Background */
 .stApp{
-    background: linear-gradient(135deg,#020617,#0f172a,#172554);
+    background:
+        radial-gradient(circle at 20% 20%, rgba(37,99,235,.30), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(14,165,233,.25), transparent 35%),
+        radial-gradient(circle at 30% 80%, rgba(99,102,241,.20), transparent 40%),
+        linear-gradient(135deg,#020617,#0f172a,#111827);
+
+    background-size: 200% 200%;
+    animation: aurora 18s ease-in-out infinite;
 }
 
-.block-container{
+/* Smooth movement */
+@keyframes aurora{
 
-    background:rgba(15,23,42,.75);
+    0%{
+        background-position:0% 50%;
+    }
 
-    backdrop-filter:blur(12px);
+    25%{
+        background-position:50% 0%;
+    }
 
-    border-radius:20px;
+    50%{
+        background-position:100% 50%;
+    }
 
-    padding:2rem;
+    75%{
+        background-position:50% 100%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
 
 }
 
 </style>
 """, unsafe_allow_html=True)
-
 
 #  Dataset
 df = pd.read_csv("cleaned_accident_dataset.csv")
@@ -581,9 +601,81 @@ elif menu == "📈 Model Performance":
 
     st.subheader("📊 Model Comparison")
 
+    comparison["Model"] = comparison["Model"].replace({
+    "LinearRegression": "Linear Regression",
+    "DecisionTree": "Decision Tree",
+    "RandomForest": "Random Forest",
+    "XGBoost": "XGBoost",
+    "Optimized RandomForest": "Optimized Random Forest"
+    })
+
+    comparison["Rank"] = (
+    comparison["R² Score"]
+    .rank(method="dense", ascending=False)
+    .astype(int)
+     )
+
+    comparison = comparison[
+    [
+        "Rank",
+        "Model",
+        "R² Score",
+        "MAE",
+        "MSE",
+        "RMSE",
+        "Mean CV Score"
+       ]
+     ]
+    styled_comparison = (
+    comparison.style
+        .format({
+        "R² Score": "{:.4f}",
+        "MAE": "{:.4f}",
+        "MSE": "{:.4f}",
+        "RMSE": "{:.4f}",
+        "Mean CV Score": "{:.4f}"
+         })
+        .apply(
+        lambda row: [
+            "background-color:#16A34A; color:white; font-weight:bold;"
+            if row["Rank"] == 1 else ""
+            for _ in row
+        ],
+        axis=1
+         )
+        .set_properties(**{
+        "text-align": "center",
+        "padding": "14px",
+        "font-size": "15px"
+        })
+        .set_table_styles([
+        {
+            "selector": "thead th",
+            "props": [
+                ("background-color", "#1E293B"),
+                ("color", "white"),
+                ("font-weight", "bold"),
+                ("font-size", "16px"),
+                ("text-align", "center"),
+                ("padding", "16px"),
+                ("border-bottom", "2px solid #3B82F6")
+            ]
+        },
+        {
+            "selector": "tbody td",
+            "props": [
+                ("text-align", "center"),
+                ("padding", "14px"),
+                ("border-bottom", "1px solid #334155")
+                 ]
+              }
+          ])
+     )
+
     st.dataframe(
-    comparison,
-    use_container_width=True
+    styled_comparison,
+    use_container_width=True,
+    hide_index=True
      )
 
     fig = px.bar(
