@@ -12,7 +12,32 @@ st.set_page_config(
     page_icon="🚗",
     layout="wide"
 )
+st.markdown("""
+<style>
+div[data-testid="metric-container"]{
+    background: linear-gradient(135deg,#1e3a8a,#2563eb);
+    padding:20px;
+    border-radius:18px;
+    color:white;
+    border:1px solid #60a5fa;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
 
+div[data-testid="metric-container"]:hover{
+    transform:scale(1.03);
+    transition:0.3s;
+}
+
+h1{
+    color:#38bdf8;
+    text-align:center;
+}
+
+h2,h3{
+    color:white;
+}
+</style>
+""", unsafe_allow_html=True)
 
 #  Dataset
 df = pd.read_csv("cleaned_accident_dataset.csv")
@@ -73,7 +98,14 @@ menu = st.sidebar.radio(
 # HOME PAGE
 
 if menu == "🏠 Home":
+    st.title("🚦 CrashLens360")
+    st.subheader("Interactive Accident Intelligence and Risk Mapping System")
 
+    st.markdown("""
+    Welcome to **CrashLens360**, an AI-powered dashboard for analyzing road accident data.
+    Use the navigation menu to explore accident statistics, visualize trends, view GIS maps,
+    and predict accident risk using the trained Machine Learning model.
+    """)
     
     st.markdown("---")
 
